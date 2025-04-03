@@ -39,9 +39,10 @@ img {
 
 .container {
   width: 90%;
+  
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem 0;
+  padding: 0rem 0;
 }
 
 header {
@@ -55,9 +56,10 @@ header {
 
 nav {
   display: flex;
+  
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 0;
+  padding: 0rem 0;
 }
 
 .logo {
