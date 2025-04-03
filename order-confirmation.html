@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirmation | Modern E-Commerce</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="./src/assets/favicon.svg">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="./src/styles/main.css">
+  <link rel="stylesheet" href="./src/styles/animations.css">
+  
+  <!-- Third-party libraries -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css">
+  
+  <style>
+    /* Confirmation specific styles */
+    .confirmation-page {
+      padding: 6rem 0;
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .confirmation-container {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    
+    .confirmation-icon {
+      width: 80px;
+      height: 80px;
+      background-color: var(--success-color);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 2rem;
+      box-shadow: 0 10px 15px -3px rgba(104, 188, 126, 0.2);
+      animation: scale-in 0.5s ease-out;
+    }
+    
+    .confirmation-icon i {
+      font-size: 2.5rem;
+      color: white;
+    }
+    
+    .confirmation-title {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: var(--heading-color);
+      animation: fade-in 0.5s ease-out 0.2s both;
+    }
+    
+    .confirmation-subtitle {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      color: var(--text-color);
+      opacity: 0.8;
+      animation: fade-in 0.5s ease-out 0.3s both;
+    }
+    
+    .order-details {
+      background-color: var(--white);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow);
+      animation: slide-up 0.5s ease-out 0.4s both;
+    }
+    
+    .order-info {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      text-align: left;
+      margin-bottom: 1.5rem;
+    }
+    
+    .info-group h4 {
+      font-size: 1rem;
+      color: var(--text-color);
+      opacity: 0.7;
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+    }
+    
+    .info-group p {
+      font-size: 1.1rem;
+      margin: 0;
+    }
+    
+    .order-summary {
+      background-color: var(--light-bg);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      text-align: left;
+    }
+    
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+    }
+    
+    .summary-row.total {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--light-gray);
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
+      animation: fade-in 0.5s ease-out 0.6s both;
+    }
+    
+    @keyframes scale-in {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+    
+    @keyframes fade-in {
+      0% {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes slide-up {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">
+          <a href="index.html">ShopModern</a>
+        </div>
+        <div class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="index.html#products">Products</a>
+          <a href="index.html#categories">Categories</a>
+          <a href="index.html#about">About</a>
+          <a href="index.html#contact">Contact</a>
+        </div>
+        <div class="cart-icon">
+          <i class='bx bx-cart'></i>
+          <span class="cart-count">0</span>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Confirmation Page -->
+  <section class="confirmation-page">
+    <div class="container">
+      <div class="confirmation-container">
+        <div class="confirmation-icon">
+          <i class='bx bx-check'></i>
+        </div>
+        <h1 class="confirmation-title">Thank You for Your Order!</h1>
+        <p class="confirmation-subtitle">Your order has been placed successfully. We'll send you an email confirmation shortly.</p>
+        
+        <div class="order-details">
+          <div class="order-info">
+            <div class="info-group">
+              <h4>Order Number</h4>
+              <p id="order-number">SM-12345</p>
+            </div>
+            <div class="info-group">
+              <h4>Order Date</h4>
+              <p id="order-date">June 15, 2023</p>
+            </div>
+            <div class="info-group">
+              <h4>Payment Method</h4>
+              <p id="payment-method">Credit Card</p>
+            </div>
+            <div class="info-group">
+              <h4>Shipping Method</h4>
+              <p id="shipping-method">Standard Shipping</p>
+            </div>
+          </div>
+          
+          <div class="order-summary">
+            <div class="summary-row">
+              <span>Subtotal:</span>
+              <span id="summary-subtotal">$0.00</span>
+            </div>
+            <div class="summary-row">
+              <span>Shipping:</span>
+              <span id="summary-shipping">$0.00</span>
+            </div>
+            <div class="summary-row discount-row" style="display: none;">
+              <span>Discount:</span>
+              <span id="summary-discount">-$0.00</span>
+            </div>
+            <div class="summary-row total">
+              <span>Total:</span>
+              <span id="summary-total">$0.00</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="action-buttons">
+          <a href="index.html" class="btn btn-outline">Continue Shopping</a>
+          <button class="btn btn-primary" id="track-order-btn">Track Order</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>ShopModern</h3>
+          <p>We provide the best products at the best prices. Shop with confidence.</p>
+          <div class="social-icons">
+            <a href="#"><i class='bx bxl-facebook'></i></a>
+            <a href="#"><i class='bx bxl-twitter'></i></a>
+            <a href="#"><i class='bx bxl-instagram'></i></a>
+            <a href="#"><i class='bx bxl-pinterest'></i></a>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h3>Shop</h3>
+          <ul>
+            <li><a href="#">All Products</a></li>
+            <li><a href="#">New Arrivals</a></li>
+            <li><a href="#">Featured Products</a></li>
+            <li><a href="#">Discounted Products</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Customer Service</h3>
+          <ul>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">FAQs</a></li>
+            <li><a href="#">Shipping Info</a></li>
+            <li><a href="#">Returns & Exchanges</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Information</h3>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms & Conditions</a></li>
+            <li><a href="#">Blog</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2023 ShopModern. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- Scripts -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Update cart count
+      updateCartCount();
+      
+      // Generate random order number
+      generateOrderInfo();
+      
+      // Show dummy order details
+      showDummyOrderSummary();
+      
+      // Add event listeners
+      document.getElementById('track-order-btn').addEventListener('click', () => {
+        showNotification('Order tracking will be available soon!');
+      });
+    });
+    
+    // Generate random order information
+    function generateOrderInfo() {
+      // Generate random order number
+      const orderNumber = 'SM-' + Math.floor(10000 + Math.random() * 90000);
+      document.getElementById('order-number').textContent = orderNumber;
+      
+      // Set current date
+      const date = new Date();
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById('order-date').textContent = date.toLocaleDateString('en-US', options);
+    }
+    
+    // Show dummy order summary
+    function showDummyOrderSummary() {
+      // Get the order total from session storage if available
+      const orderTotal = sessionStorage.getItem('order_total') || 125.99;
+      const shipping = sessionStorage.getItem('shipping_cost') || 0;
+      const subtotal = parseFloat(orderTotal) - parseFloat(shipping);
+      
+      // Display values
+      document.getElementById('summary-subtotal').textContent = `$${subtotal.toFixed(2)}`;
+      document.getElementById('summary-shipping').textContent = shipping > 0 ? `$${shipping.toFixed(2)}` : 'Free';
+      document.getElementById('summary-total').textContent = `$${orderTotal}`;
+    }
+    
+    // Update cart count in header (should be 0 after successful order)
+    function updateCartCount() {
+      const cartCount = document.querySelector('.cart-count');
+      
+      if (cartCount) {
+        cartCount.textContent = '0';
+      }
+    }
+    
+    // Show notification
+    function showNotification(message) {
+      // Check if there's already a notification
+      let notification = document.querySelector('.notification');
+      
+      if (notification) {
+        // Remove existing notification
+        document.body.removeChild(notification);
+      }
+      
+      // Create new notification
+      notification = document.createElement('div');
+      notification.className = 'notification';
+      notification.innerHTML = `
+        <div class="notification-content">
+          <i class='bx bx-info-circle'></i>
+          <p>${message}</p>
+        </div>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      // Show notification with animation
+      setTimeout(() => {
+        notification.classList.add('show');
+      }, 10);
+      
+      // Hide notification after 3 seconds
+      setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+          if (document.body.contains(notification)) {
+            document.body.removeChild(notification);
+          }
+        }, 300);
+      }, 3000);
+    }
+  </script>
+</body>
+</html> 

@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | Modern E-Commerce</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="./src/assets/favicon.svg">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="./src/styles/main.css">
+  <link rel="stylesheet" href="./src/styles/animations.css">
+  
+  <!-- Third-party libraries -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css">
+  
+  <style>
+    /* Checkout specific styles */
+    .checkout-page {
+      padding: 4rem 0;
+      min-height: 60vh;
+    }
+    
+    .checkout-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    
+    .checkout-form {
+      background-color: var(--white);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+    }
+    
+    .form-title {
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+    }
+    
+    .form-section {
+      margin-bottom: 2rem;
+    }
+    
+    .form-section-title {
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      border-bottom: 1px solid var(--light-gray);
+      padding-bottom: 0.5rem;
+    }
+    
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--light-gray);
+      border-radius: var(--border-radius);
+      font-family: inherit;
+      font-size: 1rem;
+    }
+    
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+    }
+    
+    .form-check {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    
+    .form-check input {
+      margin-right: 0.5rem;
+    }
+    
+    .checkout-summary {
+      background-color: var(--white);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      height: fit-content;
+    }
+    
+    .summary-title {
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+    }
+    
+    .checkout-items {
+      margin-bottom: 1.5rem;
+    }
+    
+    .checkout-item {
+      display: flex;
+      align-items: center;
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid var(--light-gray);
+    }
+    
+    .checkout-item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+    
+    .checkout-item-image {
+      width: 60px;
+      height: 60px;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      margin-right: 1rem;
+    }
+    
+    .checkout-item-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .checkout-item-details {
+      flex: 1;
+    }
+    
+    .checkout-item-name {
+      margin: 0 0 0.25rem;
+      font-size: 1rem;
+    }
+    
+    .checkout-item-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+    }
+    
+    .checkout-item-quantity {
+      color: var(--text-color);
+      opacity: 0.7;
+    }
+    
+    .checkout-item-price {
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+    
+    .payment-methods {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .payment-method {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 1px solid var(--light-gray);
+      border-radius: var(--border-radius);
+      padding: 1rem;
+      width: 90px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .payment-method.active {
+      border-color: var(--primary-color);
+      background-color: rgba(79, 70, 229, 0.05);
+    }
+    
+    .payment-method img {
+      height: 30px;
+      margin-bottom: 0.5rem;
+    }
+    
+    .payment-method-name {
+      font-size: 0.8rem;
+      text-align: center;
+    }
+    
+    .place-order-btn {
+      width: 100%;
+      margin-top: 1rem;
+    }
+    
+    @media screen and (max-width: 768px) {
+      .checkout-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .checkout-summary {
+        order: -1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">
+          <a href="index.html">ShopModern</a>
+        </div>
+        <div class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="index.html#products">Products</a>
+          <a href="index.html#categories">Categories</a>
+          <a href="index.html#about">About</a>
+          <a href="index.html#contact">Contact</a>
+        </div>
+        <div class="cart-icon">
+          <i class='bx bx-cart'></i>
+          <span class="cart-count">0</span>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Page Title -->
+  <section class="page-title">
+    <div class="container">
+      <h1>Checkout</h1>
+      <div class="breadcrumbs">
+        <a href="index.html">Home</a> / <a href="cart.html">Cart</a> / <span>Checkout</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Checkout Page -->
+  <section class="checkout-page">
+    <div class="container">
+      <div class="checkout-container">
+        <!-- Checkout Form -->
+        <div class="checkout-form">
+          <h2 class="form-title">Billing Details</h2>
+          
+          <!-- Contact Information -->
+          <div class="form-section">
+            <h3 class="form-section-title">Contact Information</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="first-name">First Name *</label>
+                <input type="text" id="first-name" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="last-name">Last Name *</label>
+                <input type="text" id="last-name" class="form-control" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input type="email" id="email" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number *</label>
+              <input type="tel" id="phone" class="form-control" required>
+            </div>
+          </div>
+          
+          <!-- Shipping Address -->
+          <div class="form-section">
+            <h3 class="form-section-title">Shipping Address</h3>
+            <div class="form-group">
+              <label for="address">Street Address *</label>
+              <input type="text" id="address" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="address2">Apartment, suite, etc. (optional)</label>
+              <input type="text" id="address2" class="form-control">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="city">City *</label>
+                <input type="text" id="city" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="state">State/Province *</label>
+                <input type="text" id="state" class="form-control" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="zip">Postal Code *</label>
+                <input type="text" id="zip" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="country">Country *</label>
+                <select id="country" class="form-control" required>
+                  <option value="">Select Country</option>
+                  <option value="US">United States</option>
+                  <option value="CA">Canada</option>
+                  <option value="UK">United Kingdom</option>
+                  <option value="AU">Australia</option>
+                  <option value="DE">Germany</option>
+                  <option value="FR">France</option>
+                  <option value="JP">Japan</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form-check">
+                <input type="checkbox" id="save-info">
+                <label for="save-info">Save this information for next time</label>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Payment Information -->
+          <div class="form-section">
+            <h3 class="form-section-title">Payment Method</h3>
+            <div class="payment-methods">
+              <div class="payment-method active" data-method="credit-card">
+                <img src="https://cdn.jsdelivr.net/gh/headwayio/shop-modern-assets/payment-visa.svg" alt="Credit Card">
+                <span class="payment-method-name">Credit Card</span>
+              </div>
+              <div class="payment-method" data-method="paypal">
+                <img src="https://cdn.jsdelivr.net/gh/headwayio/shop-modern-assets/payment-paypal.svg" alt="PayPal">
+                <span class="payment-method-name">PayPal</span>
+              </div>
+              <div class="payment-method" data-method="apple-pay">
+                <img src="https://cdn.jsdelivr.net/gh/headwayio/shop-modern-assets/payment-apple.svg" alt="Apple Pay">
+                <span class="payment-method-name">Apple Pay</span>
+              </div>
+            </div>
+            
+            <div id="credit-card-form">
+              <div class="form-group">
+                <label for="card-number">Card Number *</label>
+                <input type="text" id="card-number" class="form-control" placeholder="1234 5678 9012 3456" required>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="expiry">Expiry Date *</label>
+                  <input type="text" id="expiry" class="form-control" placeholder="MM/YY" required>
+                </div>
+                <div class="form-group">
+                  <label for="cvv">Security Code *</label>
+                  <input type="text" id="cvv" class="form-control" placeholder="CVV" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="name-on-card">Name on Card *</label>
+                <input type="text" id="name-on-card" class="form-control" required>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Order Summary -->
+        <div class="checkout-summary">
+          <h2 class="summary-title">Order Summary</h2>
+          
+          <div class="checkout-items" id="checkout-items">
+            <!-- Checkout items will be dynamically added here -->
+          </div>
+          
+          <div class="summary-row">
+            <span>Subtotal:</span>
+            <span id="summary-subtotal">$0.00</span>
+          </div>
+          <div class="summary-row">
+            <span>Shipping:</span>
+            <span id="summary-shipping">$0.00</span>
+          </div>
+          <div class="summary-row discount-row" style="display: none;">
+            <span>Discount:</span>
+            <span id="summary-discount">-$0.00</span>
+          </div>
+          <div class="summary-row total">
+            <span>Total:</span>
+            <span id="summary-total">$0.00</span>
+          </div>
+          
+          <button class="btn btn-primary place-order-btn" id="place-order-btn">Place Order</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>ShopModern</h3>
+          <p>We provide the best products at the best prices. Shop with confidence.</p>
+          <div class="social-icons">
+            <a href="#"><i class='bx bxl-facebook'></i></a>
+            <a href="#"><i class='bx bxl-twitter'></i></a>
+            <a href="#"><i class='bx bxl-instagram'></i></a>
+            <a href="#"><i class='bx bxl-pinterest'></i></a>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h3>Shop</h3>
+          <ul>
+            <li><a href="#">All Products</a></li>
+            <li><a href="#">New Arrivals</a></li>
+            <li><a href="#">Featured Products</a></li>
+            <li><a href="#">Discounted Products</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Customer Service</h3>
+          <ul>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">FAQs</a></li>
+            <li><a href="#">Shipping Info</a></li>
+            <li><a href="#">Returns & Exchanges</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Information</h3>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms & Conditions</a></li>
+            <li><a href="#">Blog</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2023 ShopModern. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- Scripts -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Load order summary from cart
+      loadOrderSummary();
+      
+      // Update cart count
+      updateCartCount();
+      
+      // Add event listeners
+      document.querySelectorAll('.payment-method').forEach(method => {
+        method.addEventListener('click', () => {
+          // Remove active class from all methods
+          document.querySelectorAll('.payment-method').forEach(m => {
+            m.classList.remove('active');
+          });
+          
+          // Add active class to clicked method
+          method.classList.add('active');
+          
+          // Toggle payment forms if needed
+          const paymentMethod = method.dataset.method;
+          if (paymentMethod === 'credit-card') {
+            document.getElementById('credit-card-form').style.display = 'block';
+          } else {
+            document.getElementById('credit-card-form').style.display = 'none';
+          }
+        });
+      });
+      
+      // Handle form submission
+      document.getElementById('place-order-btn').addEventListener('click', placeOrder);
+    });
+    
+    // Load order summary from cart
+    function loadOrderSummary() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const checkoutItemsContainer = document.getElementById('checkout-items');
+      
+      // Clear previous items
+      checkoutItemsContainer.innerHTML = '';
+      
+      // Check if cart is empty
+      if (cart.length === 0) {
+        // Redirect to cart page if cart is empty
+        window.location.href = 'cart.html';
+        return;
+      }
+      
+      // Add checkout items
+      cart.forEach(item => {
+        const checkoutItem = document.createElement('div');
+        checkoutItem.className = 'checkout-item';
+        
+        checkoutItem.innerHTML = `
+          <div class="checkout-item-image">
+            <img src="${item.image}" alt="${item.name}">
+          </div>
+          <div class="checkout-item-details">
+            <h4 class="checkout-item-name">${item.name}</h4>
+            <div class="checkout-item-meta">
+              <span class="checkout-item-quantity">Qty: ${item.quantity}</span>
+              <span class="checkout-item-price">$${(item.price * item.quantity).toFixed(2)}</span>
+            </div>
+          </div>
+        `;
+        
+        checkoutItemsContainer.appendChild(checkoutItem);
+      });
+      
+      // Update order summary totals
+      updateOrderSummary();
+    }
+    
+    // Update order summary totals
+    function updateOrderSummary() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      let shipping = 0;
+      
+      // Calculate shipping (free for orders over $100)
+      if (subtotal > 0 && subtotal < 100) {
+        shipping = 10;
+      }
+      
+      const discount = localStorage.getItem('cart_discount') ? parseFloat(localStorage.getItem('cart_discount')) : 0;
+      const total = subtotal + shipping - discount;
+      
+      // Update displayed totals
+      document.getElementById('summary-subtotal').textContent = `$${subtotal.toFixed(2)}`;
+      document.getElementById('summary-shipping').textContent = shipping > 0 ? `$${shipping.toFixed(2)}` : 'Free';
+      
+      // Show discount row if discount exists
+      const discountRow = document.querySelector('.discount-row');
+      if (discount > 0) {
+        discountRow.style.display = 'flex';
+        document.getElementById('summary-discount').textContent = `-$${discount.toFixed(2)}`;
+      } else {
+        discountRow.style.display = 'none';
+      }
+      
+      document.getElementById('summary-total').textContent = `$${total.toFixed(2)}`;
+    }
+    
+    // Update cart count in header
+    function updateCartCount() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const cartCount = document.querySelector('.cart-count');
+      
+      if (cartCount) {
+        const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+        cartCount.textContent = totalItems;
+      }
+    }
+    
+    // Place order
+    function placeOrder() {
+      // Validate form fields (simplified for demo)
+      const requiredFields = document.querySelectorAll('[required]');
+      let isValid = true;
+      
+      requiredFields.forEach(field => {
+        if (!field.value.trim()) {
+          field.style.borderColor = '#f43f5e';
+          isValid = false;
+        } else {
+          field.style.borderColor = '';
+        }
+      });
+      
+      if (!isValid) {
+        showNotification('Please fill in all required fields');
+        return;
+      }
+      
+      // In a real application, you would send the order data to a server
+      // For demo purposes, just show a success message and clear the cart
+      
+      // Show loading state
+      const placeOrderBtn = document.getElementById('place-order-btn');
+      placeOrderBtn.disabled = true;
+      placeOrderBtn.textContent = 'Processing...';
+      
+      // Simulate processing delay
+      setTimeout(() => {
+        // Clear cart
+        localStorage.setItem('cart', JSON.stringify([]));
+        localStorage.removeItem('cart_discount');
+        
+        // Redirect to confirmation page
+        window.location.href = 'order-confirmation.html';
+      }, 1500);
+    }
+    
+    // Show notification
+    function showNotification(message) {
+      // Check if there's already a notification
+      let notification = document.querySelector('.notification');
+      
+      if (notification) {
+        // Remove existing notification
+        document.body.removeChild(notification);
+      }
+      
+      // Create new notification
+      notification = document.createElement('div');
+      notification.className = 'notification';
+      notification.innerHTML = `
+        <div class="notification-content">
+          <i class='bx bx-check-circle'></i>
+          <p>${message}</p>
+        </div>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      // Show notification with animation
+      setTimeout(() => {
+        notification.classList.add('show');
+      }, 10);
+      
+      // Hide notification after 3 seconds
+      setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+          if (document.body.contains(notification)) {
+            document.body.removeChild(notification);
+          }
+        }, 300);
+      }, 3000);
+    }
+  </script>
+</body>
+</html> 
