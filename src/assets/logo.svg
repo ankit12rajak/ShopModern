@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="330" height="175" viewBox="0 0 330 175">
+  <!-- Logo background is transparent -->
+  <style>
+    .sm-logo { fill: #0e3b3b; }
+    .sm-text { fill: #0e3b3b; font-family: 'Arial', sans-serif; font-weight: bold; }
+  </style>
+  
+  <!-- SM logo symbol -->
+  <g class="sm-logo" transform="translate(115, 0)">
+    <path d="M100 110 L75 80 L75 150 L25 150 L25 80 L0 110 C15 80 35 55 50 35 C65 55 85 80 100 110 Z"></path>
+    <path d="M0 40 L25 70 L25 0 L75 0 L75 70 L100 40 C85 70 65 95 50 115 C35 95 15 70 0 40 Z"></path>
+  </g>
+  
+  <!-- SHOPMODERN text -->
+  <text class="sm-text" x="165" y="175" text-anchor="middle" font-size="45">SHOPMODERN</text>
+</svg> 
